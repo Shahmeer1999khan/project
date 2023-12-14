@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fff;  
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        
+
+        .login-container {
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 50px;
+        }
+
+        
+
+        .login-card {
+            background-color: #fff;
+            padding: 40px 40px 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-card input[type="text"],
+        .login-card input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            margin-left: -15px;
+            border: none;
+            border-bottom: 2px solid #e0e0e0;
+            border-radius: 5px;
+            background-color: #f4f5f7;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .login-card input[type="text"]:focus,
+        .login-card input[type="password"]:focus {
+            border-color: #007BFF;
+        }
+
+        .login-btn,
+        .signup-btn,
+        .forgot-btn {
+            background: linear-gradient(to top left, #000066 34%, #000001 100%);
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .login-btn {
+            background: linear-gradient(to top left, #000066 34%, #000001 100%);
+            color: #fff;
+        }
+
+        .login-btn:hover {
+            background: linear-gradient(to top left, #000066 34%, #000001 100%);
+            transform: translateY(-2px);
+        }
+
+        .signup-btn {
+            background: linear-gradient(to top left, #000066 34%, #000001 100%);
+            
+            color: #333;
+        }
+
+        .signup-btn:hover {
+            background: linear-gradient(to top left, #000066 34%, #000001 100%);
+            
+            transform: translateY(-2px);
+        }
+
+        .forgot-btn {
+            background: linear-gradient(to top left, #000066 34%, #000001 100%);
+           
+            color: #007BFF;
+            text-decoration: underline;
+        }
+
+        .forgot-btn:hover {
+            background: linear-gradient(to top left, #000066 34%, #000001 100%);
+            color: #0056b3;
+        }
+        .header {
+            {% comment %} background-color: #333; {% endcomment %}
+            color: #fff;
+            padding: 10px 0;
+        }
+  
+        .nav {
+            display: flex;
+            {% comment %} justify-content: center; /* Center-align navigation items */ {% endcomment %}
+            {% comment %} align-items: center; {% endcomment %}
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            margin-top: 5px;
+            
+        }
+  
+        .nav {
+            position: absolute;
+            top: 10px; 
+            left: 0px; 
+            z-index: 1000; 
+        }        
+        
+        .nav_logo {
+            color: #fff;
+            font-size: 24px;
+            text-decoration: none;
+            
+        }
+        
+        .logo-image {
+            width: 80px; 
+            height: 80px; 
+        }
+  
+        
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+
+
+
+        </nav>
+    </header>
+    <div class="login-container">
+        
+        <div class="login-card">
+
+            <form action="{% url 'signup' %}" method="POST">
+              {% csrf_token %}
+              <input type="text" name='firstname' placeholder="firstname" id="firstname">
+              <input type="text" name='lastname' placeholder="lastname" id="lastname">
+              <input type="text" name='email' placeholder="your-email@gmail.com" id="username">
+              <input type="password" class="form-control"name='password' placeholder="Your Password" id="password">
+              <input type="password" class="form-control" name='retype_password' placeholder="Your Password" id="Re-type password">
+              <input type="submit" value="Confirm" class="login-btn">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

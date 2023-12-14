@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-color: #fff;
+          margin: 0;
+          padding: 0;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          color: #333;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;px
+        }
+
+        .nav {
+            position: absolute;
+            top: 20px; /* Adjust the top position as needed */
+            left: 20px; /* Adjust the left position as needed */
+            z-index: 1000; /* Ensure the logo is on top of other elements */
+        }        
+        
+        .nav_logo {
+            color: #fff;
+            font-size: 24px;
+            text-decoration: none;
+            
+        }
+        
+        .logo-image {
+            width: 80px; /* Adjust the width as needed */
+            height: 80px; /* Maintain the aspect ratio */
+        }
+      
+
+        .login-container {
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 50px;
+        }
+
+        .avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            margin: -35px auto 15px auto;
+            display: block;
+            border: 3px solid #fff;
+        }
+
+        .login-card {
+            background-color: #fff;
+            padding: 40px 40px 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-card input[type="email"],
+        .login-card input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: none;
+            border-bottom: 2px solid #e0e0e0;
+            border-radius: 5px;
+            background-color: #f4f5f7;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .login-card input[type="email"],
+        .login-card input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            margin-left: -15px; /* Add this line to set left margin */
+            border: none;
+            border-bottom: 2px solid #e0e0e0;
+            border-radius: 5px;
+            background-color: #f4f5f7;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .button {
+            background: linear-gradient(to top left, #000066 34%, #000001 100%);
+            color: #fff;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .button:hover {
+            background: linear-gradient(to top left, #000066 34%, #000001 100%);
+            transform: translateY(-2px);
+        }
+
+        .forgot_pw {
+            color: #007BFF;
+            text-decoration: underline;
+        }
+
+        .forgot_pw:hover {
+            color: #0056b3;
+        }
+
+        .login_signup {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .login_signup a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login_signup a:hover {
+            color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="login-container">
+        <div class="login-card">
+            <form action="{% url 'signin' %}" method="POST">
+                {% csrf_token %}
+                <h2>Login</h2>
+                <div class="input_box">
+                    <input type="email" placeholder="Enter your email" id="username" name="username" required />
+                </div>
+                <div class="input_box">
+                    <input type="password" placeholder="Enter your password" id="password" name="password" required />
+                </div>
+                <div class="option_field">
+                    <span class="checkbox">
+                        <input type="checkbox" id="check" />
+                        <label for="check">Remember me</label>
+                    </span>
+                </div>
+                <button class="button" type="submit">Login Now</button>
+                <div class="login_signup">
+                    Don't have an account? <a href="{% url 'signup' %}" id="signup">Signup</a>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</body>
+</html>

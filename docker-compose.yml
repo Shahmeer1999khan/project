@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  web:
+    env_file:
+      - .env
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+
+    depends_on:
+      - db
+      - redis
+
+  celery_worker:
+    build: .
+    command: celery -A managementsystem worker --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+    environment:
+      - DJANGO_DB_NAME=${DJANGO_DB_NAME_DJANGO}
+      - DJANGO_DB_USER=${DJANGO_DB_USER_DJANGO}
+      - DJANGO_DB_PASSWORD=${DJANGO_DB_PASSWORD_DJANGO}
+      - POSTGRESQL_DB_NAME=${DJANGO_DB_NAME_POSTGRESQL}
+      - POSTGRESQL_DB_USER=${DJANGO_DB_USER_POSTGRESQL}
+      - POSTGRESQL_DB_PASSWORD=${DJANGO_DB_PASSWORD_POSTGRESQL}
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: employee
+      POSTGRES_USER: management
+      POSTGRES_PASSWORD: 12345
+
+  redis:
+
+    image: "redis:alpine" 
+
+  
+  
+

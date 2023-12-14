@@ -1,0 +1,137 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h2>Employee List</h2>
+  <form method="get" action="{% url 'list' %}">
+    <input type="text" name="search" placeholder="Search" value="{{ search }}">
+    <select name="order_by">
+      <option value="first_name" {% if order_by == 'first_name' %}selected{% endif %}>Sort by Name</option>
+      <option value="department__name" {% if order_by == 'department__name' %}selected{% endif %}>Sort by Department</option>
+    </select>
+    <button type="submit">Apply</button>
+  </form>
+  
+  <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+    <thead>
+      <tr style="background-color: #f2f2f2;">
+        <th style="padding: 10px; text-align: left;">Name</th>
+        <th style="padding: 10px; text-align: left;">Department</th>
+        {% if is_manager %}
+          <th style="padding: 10px; text-align: left;">Actions</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for employee in employees %}
+        <tr style="border-bottom: 1px solid #ddd;">
+
+          <td style="padding: 10px;">{{ employee.first_name }} {{ employee.last_name }}</td>
+          <td style="padding: 10px;">{{ employee.department.name }}</td>
+          {% if is_manager %}
+          <td style="padding: 10px;">
+            <button style="padding: 5px 10px; margin-right: 5px; background-color: #4CAF50; color: white; border: none; border-radius: 3px;" onclick="updateEmployee({{ employee.id }})">Update</button>
+            <button style="padding: 5px 10px; background-color: #f44336; color: white; border: none; border-radius: 3px;" onclick="deleteEmployee({{ employee.id }})">Delete</button>
+          </td>
+          {% endif %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% if is_manager %}
+
+  
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('form');
+    const searchInput = document.querySelector('[name="search"]');
+    const menuRows = document.querySelectorAll('.menu-container tbody tr');
+    const noRecordMessage = document.createElement('div');
+    noRecordMessage.classList.add('no-record');
+    noRecordMessage.textContent = 'No records found';
+    console.log(`Search Term: ${searchTerm}`);
+    console.log(`Number of Menu Rows: ${menuRows.length}`);
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const searchTerm = searchInput.value.toLowerCase();
+        let found = false;
+        menuRows.forEach(function (row) {
+            const employeeName = row.querySelector('td:first-child').textContent.toLowerCase();
+            if (employeeName.includes(searchTerm)) {
+                row.style.display = '';
+                found = true;
+            } else {
+                row.style.display = 'none';
+            }
+        });
+        if (!found) {
+            if (!form.contains(noRecordMessage)) {
+                form.appendChild(noRecordMessage);
+            }
+        } else {
+            if (form.contains(noRecordMessage)) {
+                form.removeChild(noRecordMessage);
+            }
+        }
+        
+    });
+});
+
+const socket = new WebSocket('ws://127.0.0.1:8001/ws/hello/');
+
+socket.onopen = (event) => {
+    console.log('WebSocket connection opened:', event);
+};
+
+socket.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    console.log('WebSocket message received:', data);
+
+    if (data.event === 'employee_updated') {
+        updateEmployeeList(data.employee_id);
+    } else if (data.event === 'employee_deleted') {
+        deleteEmployee(data.employee_id);
+    }
+};
+
+socket.onclose = (event) => {
+    console.log('WebSocket connection closed:', event);
+};
+
+function updateEmployeeList(employeeId) {
+    console.log('Employee updated:', employeeId);
+}
+
+function deleteEmployee(employeeId) {
+    console.log('Deleting employee with ID:', employeeId);
+
+    const deleteEmployeeMessage = {
+        type: 'delete_employee',
+        employee_id: employeeId,
+    };
+
+    socket.send(JSON.stringify(deleteEmployeeMessage));
+}
+
+function updateEmployee() {
+    const updateEmployeeMessage = {
+        type: 'update_employee',
+        employee_id: '1',
+    };
+
+    socket.send(JSON.stringify(updateEmployeeMessage));
+}
+
+  
+
+  
+
+</script>
+
+    
+  {% else %}
+  
+  {% endif %}
+{% endblock %}

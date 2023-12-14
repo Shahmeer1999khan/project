@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Employee Management{% endblock %}</title>
+</head>
+<style>
+    body, h1, h2, p, ul, li {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    nav {
+        background-color: #333;
+        color: white;
+        padding: 10px;
+    }
+
+    nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    nav li {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    nav a {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+    }
+
+    div {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+    }
+
+    @media screen and (max-width: 600px) {
+        nav {
+            text-align: center;
+        }
+
+        nav li {
+            display: block;
+            margin: 5px 0;
+        }
+    }
+</style>
+<body>
+
+<nav>
+    <ul>
+        <li><a href="{% url 'list' %}">Employee List</a></li>
+        {% if is_manager %}
+            <li><a href="{% url 'manage' %}">Manage Employees</a></li>
+            
+        {% endif %}
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+    </ul>
+</nav>
+
+
+
+<div>
+
+    {% block content %}{% endblock %}
+</div>
+    
+
+</body>
+</html>
